@@ -1,0 +1,42 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <button id="acao" type="button">Ação</button>
+    <div id="display-view">
+        @await Html.PartialAsync("~/Views/ProgressBar/Index.cshtml")
+    </div>
+</div>
+
+@section Scripts
+    {
+    <script>
+        //FUNÇÃO REPONSÁVEL PELAS ACÕES JS/JQUERY DA VIEW INDEX
+        function Index() {
+            //IMPORTAR MODELO BASE
+            $('#acao').on('click', function () {
+                var updateOprogressBar = setInterval(function () {
+                    $.get('/ProgressBar',
+                        {}, function (resposta) {
+                            console.log("-")
+                            $('#display-view').html(resposta);
+                            return false;
+                        });
+                }, 100);
+
+                //CARREGAR MODEL DE IMPORTAÇÃO MODELO BASE
+                $.get('Home/MinhaAcao',
+                    {}, function (resposta) {
+                        if (resposta.progress = 'Ok') {
+                       clearInterval(updateOprogressBar);
+                       }
+                       return false;
+                    });
+                return false;
+            });
+        }(Index())
+    </script>
+    }
